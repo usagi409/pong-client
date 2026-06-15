@@ -2,13 +2,41 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Web Data Viewer</title>
+    <title>Online Ping Pong</title>
     <style>
-        body { background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: white; }
+        body { background: #111; color: white; text-align: center; font-family: sans-serif; }
+        #game-area { display: none; } /* ゲーム中はロビーを隠す */
+        #lobby { padding: 20px; }
+        input, select, button { padding: 10px; margin: 5px; }
     </style>
 </head>
 <body>
-    <button id="sendBtn" style="position:fixed; top:20px; left:20px; padding:15px; font-size:20px; cursor:pointer;">生存報告を送る</button>
+
+    <div id="lobby">
+        <h1>Ping Pong Game</h1>
+        <input type="text" id="username" placeholder="ユーザー名" required><br>
+        
+        <h3>設定</h3>
+        <select id="points">
+            <option value="5">5本先取</option>
+            <option value="10">10本先取</option>
+            <option value="20">20本先取</option>
+        </select>
+        <select id="balls">
+            <option value="1">ボール 1個</option>
+            <option value="2">ボール 2個</option>
+        </select><br>
+
+        <button onclick="startAI()">AI対戦開始</button><hr>
+        <input type="text" id="roomCode" placeholder="部屋コード">
+        <button onclick="createRoom()">部屋を作る</button>
+        <button onclick="joinRoom()">参加する</button>
+    </div>
+
+    <div id="game-area">
+        <canvas id="pongCanvas" width="600" height="400" style="border:2px solid #fff;"></canvas>
+    </div>
+
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
     <script src="script.js"></script>
 </body>
