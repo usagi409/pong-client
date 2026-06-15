@@ -5,32 +5,37 @@
     <title>Online Ping Pong</title>
     <style>
         body { background: #111; color: white; text-align: center; font-family: sans-serif; }
-        #game-area { display: none; } /* ゲーム中はロビーを隠す */
+        #game-area { display: none; }
         #lobby { padding: 20px; }
-        input, select, button { padding: 10px; margin: 5px; }
+        .section { margin: 20px auto; padding: 20px; border: 1px solid #444; width: 300px; }
+        input, select, button { padding: 10px; margin: 5px; width: 200px; }
+        #join-input-area { display: none; } /* 初期は非表示 */
     </style>
 </head>
 <body>
-
     <div id="lobby">
         <h1>Ping Pong Game</h1>
-        <input type="text" id="username" placeholder="ユーザー名" required><br>
-        
-        <h3>設定</h3>
-        <select id="points">
-            <option value="5">5本先取</option>
-            <option value="10">10本先取</option>
-            <option value="20">20本先取</option>
-        </select>
-        <select id="balls">
-            <option value="1">ボール 1個</option>
-            <option value="2">ボール 2個</option>
-        </select><br>
+        <input type="text" id="username" placeholder="ユーザー名" required>
 
-        <button onclick="startAI()">AI対戦開始</button><hr>
-        <input type="text" id="roomCode" placeholder="部屋コード">
-        <button onclick="createRoom()">部屋を作る</button>
-        <button onclick="joinRoom()">参加する</button>
+        <div class="section">
+            <h3>AI対戦</h3>
+            <select id="ai-points"><option value="5">5本先取</option><option value="10">10本先取</option><option value="20">20本先取</option></select>
+            <select id="ai-balls"><option value="1">ボール 1個</option><option value="2">ボール 2個</option></select>
+            <button onclick="startAI()">AI対戦開始</button>
+        </div>
+
+        <div class="section">
+            <h3>オンライン対戦</h3>
+            <select id="room-points"><option value="5">5本先取</option><option value="10">10本先取</option><option value="20">20本先取</option></select>
+            <select id="room-balls"><option value="1">ボール 1個</option><option value="2">ボール 2個</option></select>
+            <button onclick="createRoom()">部屋を作る</button>
+            <button onclick="showJoinInput()">参加する</button>
+            
+            <div id="join-input-area">
+                <input type="text" id="roomCode" placeholder="部屋コードを入力">
+                <button onclick="joinRoom()">この部屋に入る</button>
+            </div>
+        </div>
     </div>
 
     <div id="game-area">
