@@ -1,4 +1,15 @@
-<canvas id="pongCanvas" width="600" height="400"></canvas>
-
-<button id="sendBtn" style="position:fixed; top:20px; left:20px; padding:15px; font-size:20px;">生存報告を送る</button>
-<canvas id="pongCanvas" width="600" height="400"></canvas>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Data Viewer</title>
+    <style>
+        body { background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: white; }
+    </style>
+</head>
+<body>
+    <button id="sendBtn" style="position:fixed; top:20px; left:20px; padding:15px; font-size:20px; cursor:pointer;">生存報告を送る</button>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
