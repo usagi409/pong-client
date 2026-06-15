@@ -9,6 +9,9 @@ function showJoinInput() {
 function enterGame() {
     document.getElementById('lobby').style.display = 'none';
     document.getElementById('game-area').style.display = 'block';
+    
+    // ゲーム開始！
+    startGameLoop();
 }
 
 function startAI() {
