@@ -1,33 +1,38 @@
 const SERVER_URL = 'https://pong-server-kbjl.onrender.com';
 const socket = io(SERVER_URL);
 
-// 画面にステータスを表示する関数
-function showStatus(text) {
-    const div = document.createElement('div');
-    div.style.position = 'fixed';
-    div.style.bottom = '10px';
-    div.style.left = '10px';
-    div.style.background = 'black';
-    div.style.color = 'lime';
-    div.style.padding = '10px';
-    div.style.zIndex = '99999';
-    div.innerText = text;
-    document.body.appendChild(div);
-    setTimeout(() => div.remove(), 3000);
+// 画面切り替え関数
+function enterGame() {
+    document.getElementById('lobby').style.display = 'none';
+    document.getElementById('game-area').style.display = 'block';
+    // ここでゲームループを開始する
 }
 
-// 接続確認
-socket.on('connect', () => {
-    showStatus("✅ サーバー接続成功！");
-});
+// AI対戦開始
+function startAI() {
+    const user = document.getElementById('username').value;
+    const points = document.getElementById('points').value;
+    const balls = document.getElementById('balls').value;
+    
+    if(!user) return alert('ユーザー名を入力してください');
+    
+    socket.emit('join-ai', { user, points, balls });
+    enterGame();
+}
 
-// ボタンが押されたら送信
-document.getElementById('sendBtn').addEventListener('click', () => {
-    socket.emit('test-message', '誰かが動きました！');
-    showStatus("📤 送信！");
-});
+// 部屋作成
+function createRoom() {
+    const user = document.getElementById('username').value;
+    const points = document.getElementById('points').value;
+    const balls = document.getElementById('balls').value;
+    socket.emit('create-room', { user, points, balls });
+    enterGame();
+}
 
-// 受信したらアラート表示
-socket.on('test-broadcast', (data) => {
-    alert("受信: " + data);
-});
+// 部屋参加
+function joinRoom() {
+    const user = document.getElementById('username').value;
+    const room = document.getElementById('roomCode').value;
+    socket.emit('join-room', { user, room });
+    enterGame();
+}
