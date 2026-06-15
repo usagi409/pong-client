@@ -9,7 +9,8 @@
         #lobby { display: block; }
         .section { margin: 20px auto; padding: 20px; border: 1px solid #444; width: 300px; }
         input, select, button { padding: 10px; margin: 5px; width: 200px; }
-        #join-input-area { display: none; }
+        #game-area { display: none; position: relative; }
+        #game-over-screen { display: none; position: absolute; top: 150px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); padding: 20px; border: 2px solid white; }
         canvas { border: 2px solid #fff; background: #000; display: block; margin: 0 auto; touch-action: none; cursor: crosshair; }
     </style>
 </head>
@@ -19,13 +20,13 @@
         <input type="text" id="username" placeholder="ユーザー名" required>
         <div class="section">
             <h3>AI対戦</h3>
-            <select id="ai-points"><option value="5">5本先取</option><option value="10">10本先取</option><option value="20">20本先取</option></select>
+            <select id="ai-points"><option value="5">5本先取</option><option value="10">10本先取</option></select>
             <select id="ai-balls"><option value="1">ボール 1個</option><option value="2">ボール 2個</option></select>
             <button onclick="startAI()">AI対戦開始</button>
         </div>
         <div class="section">
             <h3>オンライン対戦</h3>
-            <select id="room-points"><option value="5">5本先取</option><option value="10">10本先取</option><option value="20">20本先取</option></select>
+            <select id="room-points"><option value="5">5本先取</option><option value="10">10本先取</option></select>
             <select id="room-balls"><option value="1">ボール 1個</option><option value="2">ボール 2個</option></select>
             <button onclick="createRoom()">部屋を作る</button>
             <button onclick="showJoinInput()">参加する</button>
@@ -35,15 +36,21 @@
             </div>
         </div>
     </div>
+    
     <div id="waiting-room" class="screen">
         <h2>対戦相手を待機中...</h2>
         <h1 id="display-room-code" style="font-size: 50px;">----</h1>
     </div>
+
     <div id="game-area" class="screen">
-        <div id="score" style="font-size: 24px; margin-bottom: 10px;">0 - 0</div>
         <canvas id="pongCanvas" width="600" height="400"></canvas>
-        <p id="msg">クリックで開始</p>
+        <div id="game-over-screen">
+            <h2 id="winner-text">〇〇の勝利！</h2>
+            <button onclick="restartGame()">もう一度対戦</button><br>
+            <button onclick="location.reload()">ロビーに戻る</button>
+        </div>
     </div>
+
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
     <script src="script.js"></script>
 </body>
