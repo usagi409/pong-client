@@ -4,42 +4,47 @@
     <meta charset="UTF-8">
     <title>Online Ping Pong</title>
     <style>
-        body { background: #111; color: white; text-align: center; font-family: sans-serif; }
-        #game-area { display: none; }
-        #lobby { padding: 20px; }
+        body { background: #111; color: white; text-align: center; font-family: sans-serif; margin: 0; }
+        .screen { display: none; padding: 20px; }
+        #lobby { display: block; }
         .section { margin: 20px auto; padding: 20px; border: 1px solid #444; width: 300px; }
         input, select, button { padding: 10px; margin: 5px; width: 200px; }
-        #join-input-area { display: none; } /* 初期は非表示 */
+        #join-input-area { display: none; }
+        canvas { border: 2px solid #fff; background: #000; }
     </style>
 </head>
 <body>
-    <div id="lobby">
+
+    <div id="lobby" class="screen">
         <h1>Ping Pong Game</h1>
         <input type="text" id="username" placeholder="ユーザー名" required>
-
         <div class="section">
             <h3>AI対戦</h3>
-            <select id="ai-points"><option value="5">5本先取</option><option value="10">10本先取</option><option value="20">20本先取</option></select>
+            <select id="ai-points"><option value="5">5本先取</option><option value="10">10本先取</option></select>
             <select id="ai-balls"><option value="1">ボール 1個</option><option value="2">ボール 2個</option></select>
             <button onclick="startAI()">AI対戦開始</button>
         </div>
-
         <div class="section">
             <h3>オンライン対戦</h3>
-            <select id="room-points"><option value="5">5本先取</option><option value="10">10本先取</option><option value="20">20本先取</option></select>
+            <select id="room-points"><option value="5">5本先取</option><option value="10">10本先取</option></select>
             <select id="room-balls"><option value="1">ボール 1個</option><option value="2">ボール 2個</option></select>
             <button onclick="createRoom()">部屋を作る</button>
             <button onclick="showJoinInput()">参加する</button>
-            
             <div id="join-input-area">
-                <input type="text" id="roomCode" placeholder="部屋コードを入力">
+                <input type="text" id="roomCode" placeholder="部屋コード">
                 <button onclick="joinRoom()">この部屋に入る</button>
             </div>
         </div>
     </div>
 
-    <div id="game-area">
-        <canvas id="pongCanvas" width="600" height="400" style="border:2px solid #fff;"></canvas>
+    <div id="waiting-room" class="screen">
+        <h2>対戦相手を待機中...</h2>
+        <h1 id="display-room-code" style="font-size: 50px;">----</h1>
+        <p>このコードを友達に教えてね！</p>
+    </div>
+
+    <div id="game-area" class="screen">
+        <canvas id="pongCanvas" width="600" height="400"></canvas>
     </div>
 
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
